@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Planner Settings</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    width: 360px;
+    padding: 24px;
+    background: #f5f7fa;
+    color: #333;
+  }
+
+  h3 {
+    color: #1a73e8;
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 22px;
+    text-align: center;
+  }
+
+  h4 {
+    margin-top: 24px;
+    margin-bottom: 12px;
+    color: #1a73e8;
+    font-weight: 500;
+    font-size: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 4px;
+  }
+
+  label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #555;
+    font-weight: 500;
+  }
+
+  input[type="text"], input[type="number"], input[type="date"], select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    background: #fff;
+  }
+
+  input:focus, select:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 6px rgba(26, 115, 232, 0.25);
+    outline: none;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #1a73e8;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  button:hover {
+    background: #1666c1;
+  }
+
+  #addDayBtn {
+    background: #34a853;
+  }
+  #addDayBtn:hover {
+    background: #2c8b45;
+  }
+
+  #addDeskBtn {
+    background: #fbbc05;
+    color: #333;
+  }
+  #addDeskBtn:hover {
+    background: #e6a900;
+  }
+
+  .day-container, .desk-container {
+    background: #fff;
+    padding: 12px 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .day-container input, .desk-container input {
+    flex: 1;
+  }
+
+  .day-container:hover, .desk-container:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+
+  #saveBtn, #runBtn {
+    margin-top: 16px;
+  }
+
+  #runBtn {
+    background: #ff7043;
+  }
+  #runBtn:hover {
+    background: #e64a19;
+  }
+
+</style>
+</head>
+<body>
+  <h3>Planner Settings</h3>
+
+  <label>Sector</label>
+  <select id="sector">
+    <option value="AMALIAS">AMALIAS</option>
+    <option value="ORBIT">ORBIT</option>
+    <option value="MAROUSSI">MAROUSSI</option>
+    <option value="PATRAS DC">PATRAS DC</option>
+    <option value="LUX A">LUX A</option>
+    <option value="BASTION">BASTION</option>
+  </select>
+
+  <label>Floor Index</label>
+  <input id="floor" type="number" placeholder="0 = ground, 1 = first floor" />
+
+  <label>Preferred Desks</label>
+  <div id="desksWrapper"></div>
+  <button id="addDeskBtn">+ Add Desk</button>
+
+  <h4>Days</h4>
+  <div id="daysWrapper"></div>
+  <button id="addDayBtn">+ Add Day</button>
+
+  <button id="saveBtn">Save Settings</button>
+  <button id="runBtn">Update JSESSIONID</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>
