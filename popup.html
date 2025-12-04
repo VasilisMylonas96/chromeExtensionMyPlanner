@@ -3,22 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <title>Planner Settings</title>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
     font-family: 'Inter', sans-serif;
     width: 360px;
-    padding: 24px;
     background: #f5f7fa;
     color: #333;
   }
+
+  /* ===================== TABS ===================== */
+
+  .tabs {
+    display: flex;
+    width: 100%;
+    background: #1f1f1f;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: #2c2c2c;
+    color: #ccc;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .tab.active {
+    background: #1a73e8;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .tab-content {
+    display: none;
+    padding: 24px;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  /* ===================== SETTINGS UI (όπως το είχες) ===================== */
 
   h3 {
     color: #1a73e8;
@@ -46,7 +79,10 @@
     font-weight: 500;
   }
 
-  input[type="text"], input[type="number"], input[type="date"], select {
+  input[type="text"],
+  input[type="number"],
+  input[type="date"],
+  select {
     width: 100%;
     padding: 10px 12px;
     margin-bottom: 16px;
@@ -66,7 +102,6 @@
   button {
     width: 100%;
     padding: 12px;
-    margin-top: 10px;
     border: none;
     border-radius: 8px;
     background: #1a73e8;
@@ -81,20 +116,11 @@
     background: #1666c1;
   }
 
-  #addDayBtn {
-    background: #34a853;
-  }
-  #addDayBtn:hover {
-    background: #2c8b45;
-  }
+  #addDayBtn { background: #34a853; }
+  #addDayBtn:hover { background: #2c8b45; }
 
-  #addDeskBtn {
-    background: #fbbc05;
-    color: #333;
-  }
-  #addDeskBtn:hover {
-    background: #e6a900;
-  }
+  #addDeskBtn { background: #fbbc05; color: #333; }
+  #addDeskBtn:hover { background: #e6a900; }
 
   .day-container, .desk-container {
     background: #fff;
@@ -108,54 +134,95 @@
     transition: all 0.2s ease;
   }
 
-  .day-container input, .desk-container input {
-    flex: 1;
-  }
-
   .day-container:hover, .desk-container:hover {
     box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   }
 
-  #saveBtn, #runBtn {
-    margin-top: 16px;
+  #runBtn { background: #ff7043; }
+  #runBtn:hover { background: #e64a19; }
+
+  /* ===================== CALENDAR UI ===================== */
+
+  #calendarContainer {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    margin-top: 15px;
   }
 
-  #runBtn {
-    background: #ff7043;
+  .dayCell {
+    padding: 8px;
+    border-radius: 8px;
+    background: #eee;
+    text-align: center;
+    font-size: 13px;
   }
-  #runBtn:hover {
-    background: #e64a19;
+
+  .dayCell.reserved {
+    background: #4caf50;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  }
+
+  .dayCell.today {
+    border: 2px solid #ff9800;
   }
 
 </style>
 </head>
 <body>
-  <h3>Planner Settings</h3>
 
-  <label>Sector</label>
-  <select id="sector">
-    <option value="AMALIAS">AMALIAS</option>
-    <option value="ORBIT">ORBIT</option>
-    <option value="MAROUSSI">MAROUSSI</option>
-    <option value="PATRAS DC">PATRAS DC</option>
-    <option value="LUX A">LUX A</option>
-    <option value="BASTION">BASTION</option>
-  </select>
+  <!-- ===================== TABS UI ===================== -->
+  <div class="tabs">
+    <button class="tab active" data-tab="settings">⚙ Settings</button>
+    <button class="tab" data-tab="calendar">📅 Calendar</button>
+  </div>
 
-  <label>Floor Index</label>
-  <input id="floor" type="number" placeholder="0 = ground, 1 = first floor" />
+  <!-- ===================== SETTINGS TAB ===================== -->
+  <div id="settings" class="tab-content active">
 
-  <label>Preferred Desks</label>
-  <div id="desksWrapper"></div>
-  <button id="addDeskBtn">+ Add Desk</button>
+    <h3>Planner Settings</h3>
 
-  <h4>Days</h4>
-  <div id="daysWrapper"></div>
-  <button id="addDayBtn">+ Add Day</button>
+    <label>Sector</label>
+    <select id="sector">
+      <option value="AMALIAS">AMALIAS</option>
+      <option value="ORBIT">ORBIT</option>
+      <option value="MAROUSSI">MAROUSSI</option>
+      <option value="PATRAS DC">PATRAS DC</option>
+      <option value="LUX A">LUX A</option>
+      <option value="BASTION">BASTION</option>
+    </select>
 
-  <button id="saveBtn">Save Settings</button>
-  <button id="runBtn">Update JSESSIONID</button>
+    <label>Floor Index</label>
+    <input id="floor" type="number" placeholder="0 = ground, 1 = first floor" />
 
+    <label>Preferred Desks</label>
+    <div id="desksWrapper"></div>
+    <button id="addDeskBtn">+ Add Desk</button>
+
+    <h4>Days</h4>
+    <div id="daysWrapper"></div>
+    <button id="addDayBtn">+ Add Day</button>
+
+    <button id="saveBtn">Save Settings</button>
+    <button id="runBtn">Update JSESSIONID</button>
+
+  </div>
+
+  <!-- ===================== CALENDAR TAB ===================== -->
+  <div id="calendar" class="tab-content">
+    <h3>📅 Booking Calendar</h3>
+    <p style="text-align:center;color:#555;font-size:13px;margin-bottom:10px;">
+      Automatically reserved days will appear here
+    </p>
+
+    <div id="calendarContainer"></div>
+  </div>
+
+  <!-- ===================== SCRIPTS ===================== -->
   <script src="popup.js"></script>
+  <script src="calendar.js"></script>
+
 </body>
 </html>
